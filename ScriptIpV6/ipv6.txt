@@ -1,0 +1,25 @@
+==========================================================
+Servidor   IpV6
+bbb1.- fe80::ae1f:6bff:fe93:1394
+bbb11.- fe80::ae1f:6bff:fef4:a5f0
+bbb12.- fe80::ae1f:6bff:fe93:58b8
+bbb2.- fe80::ae1f:6bff:fe94:3f56
+bbb21.- fe80::ae1f:6bff:fe9b:1916
+bbb22.- fe80::ae1f:6bff:fe9b:1fd6
+bbb23.- fe80::ae1f:6bff:fe93:5afa
+bbb24.- fe80::ae1f:6bff:fe93:528e
+bbb25.- fe80::ae1f:6bff:fe93:5b80
+bbb26.- fe80::ae1f:6bff:fef4:a654
+bbb27.- fe80::ae1f:6bff:fef4:a5e8
+bbb28.- fe80::ae1f:6bff:fef3:da6
+bbb3.- fe80::ae1f:6bff:fe97:505e
+bbb31.- fe80::ae1f:6bff:fe91:5486
+bbb32.- fe80::3eec:efff:fe22:4bae
+bbb33.- fe80::3eec:efff:fe22:4ba4
+bbb34.- fe80::ae1f:6bff:fe93:5c28
+bbb4.- fe80::ae1f:6bff:fe93:5bb8
+bbb6.- fe80::ae1f:6bff:fe94:3e74
+bbb7.- fe80::ae1f:6bff:fef3:f386
+bbb8.- fe80::ae1f:6bff:fef4:a5e6
+bbb9.- fe80::ae1f:6bff:fe97:1372
+==========================================================
