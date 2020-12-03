@@ -1,7 +1,7 @@
 # #!/bin/bash
 
 #Definimos la ruta al archivo secret
-file=$(pwd)'/ScriptIpV6/ipv6.txt'
+file=$(pwd)'/ipv6.txt'
 
 #Verificamos si el archivo existe, si existe lo borramos
 if [ -f $file ]; then
@@ -26,8 +26,3 @@ for i in 1 11 12 2 21 22 23 24 25 26 27 28 3 31 32 33 34 4 6 7 8 9
 echo "==========================================================" >> $file
 
 cat $file                           #Imprimimos el archivo
-
-
-
-
-
