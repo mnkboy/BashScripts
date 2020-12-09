@@ -1,25 +1,12 @@
 ==========================================================
 Servidor   Conferencia
-bbb1.- No se encontro el ID 15fc2b6d46054a4.93943973
-bbb11.- 0da797cbe4536c0692b266e411482a596782e059-1606596308711 Sat Nov 28 20:45:08 UTC 2020 X XXXXX 45 presentation 15fc2b6d46054a4.93943973
-bbb12.- No se encontro el ID 15fc2b6d46054a4.93943973
-bbb2.- No se encontro el ID 15fc2b6d46054a4.93943973
-bbb21.- No se encontro el ID 15fc2b6d46054a4.93943973
-bbb22.- No se encontro el ID 15fc2b6d46054a4.93943973
-bbb23.- No se encontro el ID 15fc2b6d46054a4.93943973
-bbb24.- No se encontro el ID 15fc2b6d46054a4.93943973
-bbb25.- No se encontro el ID 15fc2b6d46054a4.93943973
-bbb26.- No se encontro el ID 15fc2b6d46054a4.93943973
-bbb27.- No se encontro el ID 15fc2b6d46054a4.93943973
-bbb28.- No se encontro el ID 15fc2b6d46054a4.93943973
-bbb3.- No se encontro el ID 15fc2b6d46054a4.93943973
-bbb31.- No se encontro el ID 15fc2b6d46054a4.93943973
-bbb32.- No se encontro el ID 15fc2b6d46054a4.93943973
-bbb33.- No se encontro el ID 15fc2b6d46054a4.93943973
-bbb34.- No se encontro el ID 15fc2b6d46054a4.93943973
-bbb4.- No se encontro el ID 15fc2b6d46054a4.93943973
-bbb6.- No se encontro el ID 15fc2b6d46054a4.93943973
-bbb7.- No se encontro el ID 15fc2b6d46054a4.93943973
-bbb8.- No se encontro el ID 15fc2b6d46054a4.93943973
-bbb9.- No se encontro el ID 15fc2b6d46054a4.93943973
+bbb1.- No se encontro el ID 15fc25eb2319095.74550240
+bbb11.- No se encontro el ID 15fc25eb2319095.74550240
+bbb12.- No se encontro el ID 15fc25eb2319095.74550240
+bbb2.- No se encontro el ID 15fc25eb2319095.74550240
+bbb21.- No se encontro el ID 15fc25eb2319095.74550240
+bbb22.- No se encontro el ID 15fc25eb2319095.74550240
+bbb23.- No se encontro el ID 15fc25eb2319095.74550240
+bbb24.- No se encontro el ID 15fc25eb2319095.74550240
+bbb25.- ec7d52b5a9cf771f24b66087b382c8684ee4b8ae-1606573746545 Sat Nov 28 14:29:06 UTC 2020 XXXXX 6 presentation 15fc25eb2319095.74550240
 ==========================================================
