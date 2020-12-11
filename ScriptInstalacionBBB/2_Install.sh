@@ -8,37 +8,52 @@ source "vars.env"
 #===========================================================
 #======================== FUNCIONES ========================
 #===========================================================
+continuar () {
+    read -s -n 1 -t 2 c
+}
+
+#Comprobamos si el comando ejecutado tuvo algun error
+comprobar () {
+    local test=$1
+    if [ $test -ne 0 ]; then
+        echo "Ocurrio un error."
+        exit $test
+    fi
+}
+#Recibimos un comando en texto para ejecutar
+ejecutar () {    
+    local comando=$1
+    if [ "$TEST" = true ] ; then
+        echo $comando
+        return 
+    fi
+
+    #Ejecutamos el comando
+    $("$comando")
+    comprobar $?#Comprobamos la ejecucion
+}
 
 #Funcion para separar bloques de codigo
-funcion_header () {
+imprimir_encabezado () {
     echo;    
     echo "======================$1======================";
-    echo;    
-    
+    echo;        
 }
 
 #Declaramos una funcion para confirmar los nombres
-funcion_confirmacion () {
-    echo "Indique [s]i o [n]o."
-
-    #leemos la confirmacion
-    read -s -n 1 c
-
+confirmar () {    
+    c="n" #Por defecto es diferente de "s"
     #Validamos la confirmacion
     while [ $c != "s" ] 
-    do
+    do        
         echo;
-        echo "$1 Es correcto ? pulse [s]i."
-        echo "De lo contrario finalice pulsando [n]o."
-        read -s -n 1 c
-        if [ $c == "n" ]
-            then
-                echo "El nombre no es el correcto. Terminamos."
-                exit false            
+        read -s -n 1 -p "$1. Pulse [s]i [n]o." c
+        if [ $c == "n" ];then
+            exit 1            
         fi
     done
     echo;
-    echo "El nombre $1 es correcto. Continuamos ..."
+    echo "Continuamos ..."
     echo;
 }
 
@@ -49,58 +64,48 @@ funcion_confirmacion () {
 #Creamos ruta de archivos prueba
 RUTA_PRUEBAS_LOCAL=$(pwd)'/'$RUTA_PRUEBAS
 
-#Creamos la carpeta de pems
-if [ -d $RUTA_PRUEBAS_LOCAL ]; then
-    echo "Existe la carpeta de $RUTA_PRUEBAS en la ruta:"
-    echo  $RUTA_PRUEBAS_LOCAL
-else
-    echo "No existe la carpeta en la ruta $RUTA_PRUEBAS"
-    echo "Se creara la carpeta $RUTA_PRUEBAS"
+#Creamos la carpeta de pruebas local
+#Revisamos si existe la carpeta
+if [ ! -d $RUTA_PRUEBAS_LOCAL ]; then
+    #Si no existe la creamos
     mkdir -p $RUTA_PRUEBAS_LOCAL
+fi
+
+#Si no existe y  no la pudimos crear terminamos la ejecucion
+if [ ! -d $RUTA_PRUEBAS_LOCAL ]; then
+    echo "No existe la ruta: $RUTA_PRUEBAS_LOCAL "
+    exit 1
 fi
 
 #------------------------------------------------------------
 #Confirmamos nombre del servidor nuevo
-funcion_header "Nombre del nuevo servidor"
-echo "El nombre del servidor es correcto: \"$NOMBRE_SERVIDOR_NUEVO\" ?"
-funcion_confirmacion $NOMBRE_SERVIDOR_NUEVO
-
-#Concatenamos los parametros del comando
-comando="wget https://ubuntu.bigbluebutton.org/bbb-install.sh && chmod +x bbb-install.sh && ./bbb-install.sh -v xenial-22 -s $NOMBRE_SERVIDOR_NUEVO"
-echo $comando
+imprimir_encabezado "Nombre del nuevo servidor"
+confirmar "El nombre del servidor: \"$NOMBRE_SERVIDOR_NUEVO\" es correcto ?"
+ejecutar "wget https://ubuntu.bigbluebutton.org/bbb-install.sh && chmod +x bbb-install.sh && ./bbb-install.sh -v xenial-22 -s $NOMBRE_SERVIDOR_NUEVO"
 
 #------------------------------------------------------------
 #Pedimos nombre del servidor de copia de archivos
-funcion_header "Copiamos archivos"
-echo "Indique si el nombre del servidor de copia es correcto: $SERVIDOR_COPIA ?"
-funcion_confirmacion $SERVIDOR_COPIA
-
-
-#------------------------------------------------------------
-# #Pedimos nombre del usuario de copia 
-echo "Indique si el nombre del usuario de copia es correcto: $USUARIO_COPIA ?"
-funcion_confirmacion $USUARIO_COPIA
+imprimir_encabezado "Copiamos archivos"
+confirmar "El nombre del servidor de copia es correcto: $SERVIDOR_COPIA ?"
 
 #------------------------------------------------------------
 #Eliminamos el instalador y copiamos ssl
-funcion_header "Eliminamos el instalador y copiamos ssl"
-comando="rm bbb-install.sh && mkdir /etc/nginx/ssl && scp $USUARIO_COPIA@$SERVIDOR_COPIA:~/bbb.school-manager.education/* /etc/nginx/ssl"
-echo $comando
+
+imprimir_encabezado "Eliminamos el instalador y copiamos ssl"
+ejecutar "rm $RUTA_PRUEBAS_LOCAL/bbb-install.sh && mkdir $RUTA_PRUEBAS_LOCAL/ssl && scp $USUARIO_COPIA@$SERVIDOR_COPIA:/etc/nginx/ssl $RUTA_PRUEBAS_LOCAL/ssl"
+
+exit 0
 
 #------------------------------------------------------------
 #Copiamos 
-comando="scp $USUARIO_COPIA@$SERVIDOR_COPIA:~/favicon.png  /var/www/bigbluebutton-default/images/favicon.png"
-echo $comando
-comando="scp $USUARIO_COPIA@$SERVIDOR_COPIA:~/favicon.ico  /var/www/bigbluebutton-default/favicon.ico"
-echo $comando
-comando="scp $USUARIO_COPIA@$SERVIDOR_COPIA:~/default.pdf  /var/www/bigbluebutton-default/default.pdf"
-echo $comando
-comando="cp -p /etc/nginx/sites-available/bigbluebutton /root/"
-echo $comando
+imprimir_encabezado "Nos preparamos para la copia"
+ejecutar "wget https://bbb8.school-manager.education/favicon.ico -O  $RUTA_PRUEBAS_LOCAL/favicon.png"
+ejecutar "wget wget https://bbb8.school-manager.education/default.pdf  -O $RUTA_PRUEBAS_LOCAL/default.pdf"
+
 
 #------------------------------------------------------------
 #Edicion de archivos
-funcion_header "Edicion de archivos"
+imprimir_encabezado "Edicion de archivos"
 comando="sed -i '5i listen 443 ssl;' /etc/nginx/sites-available/bigbluebutton"
 echo $comando
 comando="sed -i '6i listen [::]:443 ssl;' /etc/nginx/sites-available/bigbluebutton"
@@ -122,7 +127,7 @@ echo $comando
 
 #------------------------------------------------------------
 #Obtenemos IPv4 e IPv6
-funcion_header "Obtenemos IPv4 e IPv6"
+imprimir_encabezado "Obtenemos IPv4 e IPv6"
 #IPv4
 IPv4=`ip addr | grep "inet" | grep "/32" | sed 's/\/32.*//' | sed 's/\/32//' | sed 's/\inet\ //'`
 echo $IPv4
@@ -132,7 +137,7 @@ echo $IPv6
 
 #------------------------------------------------------------
 #Agregamos IPv4 e IPv6 al archivo
-funcion_header "Agregamos IPv4 e IPv6 al archivo"
+imprimir_encabezado "Agregamos IPv4 e IPv6 al archivo"
 echo $RUTA_PRUEBAS_LOCAL
 cat > $RUTA_PRUEBAS_LOCAL'/'bigbluebutton_sip_addr_map.conf <<EOF
 map \$remote_addr \$freeswitch_addr {
@@ -143,7 +148,7 @@ EOF
 
 #------------------------------------------------------------
 #Creamos archivo $freeswitch
-funcion_header "Creamos archivo \$freeswitch"
+imprimir_encabezado "Creamos archivo \$freeswitch"
 cat > $RUTA_PRUEBAS_LOCAL'/'sip.nginx << EOF
 location /ws {
         proxy_pass https://\$freeswitch_addr:7443;
@@ -164,7 +169,7 @@ cat $RUTA_PRUEBAS_LOCAL'/'sip.nginx
 
 #--------------------------------------------------
 #Modificaciones de archivos
-funcion_header "Modificaciones de archivos"
+imprimir_encabezado "Modificaciones de archivos"
 comando="sed -i 's/worker_connections 768/worker_connections 6000/g' /etc/nginx/nginx.conf"
 echo $comando
 comando="sed -i 's/30m/150m/g' /etc/bigbluebutton/nginx/web.nginx "
@@ -202,17 +207,17 @@ echo $comando
 comando="sed -i -e 's|userInactivityThresholdInMinutes=.*|userInactivityThresholdInMinutes=15|g' /usr/share/bbb-web/WEB-INF/classes/bigbluebutton.properties"
 echo $comando
 comando="sed -i -e 's|userActivitySignResponseDelayInMinutes=.*|userActivitySignResponseDelayInMinutes=5|g' /usr/share/bbb-web/WEB-INF/classes/bigbluebutton.properties"
-echo $comando
+ejecutar $comando
 
 #--------------------------------------------------
 #Copiamos archivo
-funcion_header "Copiamos archivo"
+imprimir_encabezado "Copiamos archivo"
 comando="cp /usr/share/bbb-web/WEB-INF/classes/spring/turn-stun-servers.xml /usr/share/bbb-web/WEB-INF/classes/spring/turn-stun-servers.original"
 echo $comando
 
 #--------------------------------------------------
 #Sturn
-funcion_header "Sturn"
+imprimir_encabezado "Sturn"
 cat  > $RUTA_PRUEBAS_LOCAL'/'turn-stun-servers.xml <<EOF
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
@@ -256,7 +261,7 @@ EOF
 
 #--------------------------------------------------
 #Edicion de archivos
-funcion_header "Edicion de archivos"
+imprimir_encabezado "Edicion de archivos"
 echo $comando
 comando="yq w -i /usr/share/meteor/bundle/programs/server/assets/app/config/settings.yml public.kurento.cameraProfiles.[6].bitrate 30"
 echo $comando
@@ -275,7 +280,7 @@ echo $comando
 comando="yq w -i /usr/share/meteor/bundle/programs/server/assets/app/config/settings.yml public.kurento.cameraProfiles.[9].default false"
 echo $comando
 
-funcion_header "Cambio de propietario"
+imprimir_encabezado "Cambio de propietario"
 comando="chown meteor:meteor /usr/share/meteor/bundle/programs/server/assets/app/config/settings.yml"
 echo $comando
 
@@ -337,7 +342,7 @@ comando="sed -i '49i \\n'  /lib/systemd/system/freeswitch.service"
 
 #--------------------------------------------------
 #Reinicio de servicios
-funcion_header "Reinicio de servicios"
+imprimir_encabezado "Reinicio de servicios"
 comando="systemctl daemon-reload"
 echo $comando
 comando="systemctl restart freeswitch.service redis.service kurento-media-server.service"
@@ -346,8 +351,20 @@ comando="systemctl status freeswitch.service redis.service kurento-media-server.
 echo $comando
 
 #--------------------------------------------------
+#Configuracion Kurento
+imprimir_encabezado "Configuracion Kurento"
+echo "stunServerAddress=172.217.212.127" >> $RUTA_PRUEBAS_LOCAL'/'WebRtcEndpoint.conf.ini
+echo "stunServerPort=19302" >> $RUTA_PRUEBAS_LOCAL'/'WebRtcEndpoint.conf.ini
+
+#--------------------------------------------------
+#Correccion HTTPS
+imprimir_encabezado "Correccion HTTPS"
+comando="sed -i 's,bbbWebAPI=\"http://,bbbWebAPI=\"https://,g' /usr/share/bbb-apps-akka/conf/application.conf"
+echo $comando
+
+#--------------------------------------------------
 #Secret servidor
-funcion_header "Secret servidor"
+imprimir_encabezado "Secret servidor"
 comando="bbb-conf --setsecret $SECRET"
 echo $comando
 comando="bbb-conf --restart"
@@ -355,15 +372,10 @@ echo $comando
 comando="bbb-conf --check"
 echo $comando
 
-#--------------------------------------------------
-#Configuracion Kurento
-funcion_header "Configuracion Kurento"
-echo "stunServerAddress=172.217.212.127" >> $RUTA_PRUEBAS_LOCAL'/'WebRtcEndpoint.conf.ini
-echo "stunServerPort=19302" >> $RUTA_PRUEBAS_LOCAL'/'WebRtcEndpoint.conf.ini
 
 #--------------------------------------------------
 #Scalelite
-funcion_header "Scalelite"
+imprimir_encabezado "Scalelite"
 comando="groupadd -g 2000 scalelite-spool"
 echo $comando
 comando="usermod -a -G scalelite-spool bigbluebutton"
@@ -463,16 +475,10 @@ EOF
 
 #--------------------------------------------------
 #Plugin MP4
-funcion_header "Plugin MP4"
+imprimir_encabezado "Plugin MP4"
 comando="git clone https://github.com/createwebinar/bbb-download.git && cd bbb-download && chmod u+x install.sh "
 echo $comando
 comando="sudo ./install.sh"
 echo $comando
 comando="sudo bbb-record --rebuildall"
-echo $comando
-
-#--------------------------------------------------
-#Correccion HTTPS
-funcion_header "Correccion HTTPS"
-comando="sed -i 's,bbbWebAPI="http://,bbbWebAPI="https://,g' /usr/share/bbb-apps-akka/conf/application.conf"
 echo $comando
