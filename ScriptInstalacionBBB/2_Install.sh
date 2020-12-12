@@ -8,6 +8,16 @@ source "utils.sh"
 #======================== MAIN ========================
 #======================================================
 #------------------------------------------------------------
+#Verificamos si estamos en modo pruebas
+if [ "$TEST" = true ] ; then
+    RUTA_IP_V4_V6=./ARCHIVOS_PRUEBA
+    RUTA_SSL=./ARCHIVOS_PRUEBA
+    RUTA_FREE_SWITCH=./ARCHIVOS_PRUEBA
+    RUTA_STURN=./ARCHIVOS_PRUEBA
+    RUTA_SSH=./ARCHIVOS_PRUEBA
+    RUTA_SCRIPTS_BBB=./ARCHIVOS_PRUEBA    
+fi
+
 #Creamos ruta de archivos prueba
 RUTA_PRUEBAS_LOCAL=$(pwd)'/'$RUTA_PRUEBAS
 
@@ -79,7 +89,6 @@ map \$remote_addr \$freeswitch_addr {
 EOF
 
 cat $RUTA_IP_V4_V6'/'bigbluebutton_sip_addr_map.conf
-
 #------------------------------------------------------------
 #Creamos archivo $freeswitch
 imprimir_encabezado "Creamos archivo \$freeswitch"
@@ -174,7 +183,7 @@ cat  > $RUTA_STURN'/'turn-stun-servers.xml <<EOF
 </beans>
 EOF
 
-cat  > $RUTA_STURN'/'turn-stun-servers.xml
+cat $RUTA_STURN'/'turn-stun-servers.xml
 #--------------------------------------------------
 #Edicion de archivos
 imprimir_encabezado "Edicion de archivos"
@@ -274,7 +283,7 @@ EOF
 ejecutar "chmod 400 $RUTA_SSH/scalelite"
 ejecutar "cat $RUTA_SSH/scalelite"
 
-cat > ~/$RUTA_SSH'/'config << EOF
+cat > $RUTA_SSH'/'config << EOF
 Host records.school-manager.education
         User scalelite-spool
         IdentityFile ~/.ssh/scalelite
