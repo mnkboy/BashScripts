@@ -8,16 +8,6 @@ source "utils.sh"
 #======================== MAIN ========================
 #======================================================
 #------------------------------------------------------------
-#Verificamos si estamos en modo pruebas
-if [ "$TEST" = true ] ; then
-    RUTA_IP_V4_V6=./ARCHIVOS_PRUEBA
-    RUTA_SSL=./ARCHIVOS_PRUEBA
-    RUTA_FREE_SWITCH=./ARCHIVOS_PRUEBA
-    RUTA_STURN=./ARCHIVOS_PRUEBA
-    RUTA_SSH=./ARCHIVOS_PRUEBA
-    RUTA_SCRIPTS_BBB=./ARCHIVOS_PRUEBA    
-fi
-
 #Creamos ruta de archivos prueba
 RUTA_PRUEBAS_LOCAL=$(pwd)'/'$RUTA_PRUEBAS
 
