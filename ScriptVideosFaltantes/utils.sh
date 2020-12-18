@@ -19,6 +19,7 @@ comprobar () {
         echo "Ocurrio un error."
         exit $output
     fi
+    echo "0"
 }
 #Recibimos un comando en texto para ejecutar
 ejecutar () {    
