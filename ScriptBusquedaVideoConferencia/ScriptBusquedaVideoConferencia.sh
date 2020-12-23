@@ -1,4 +1,4 @@
-# #!/bin/bash
+#!/bin/bash
 
 #Definimos la ruta al archivo de video conferencias
 file=$(pwd)'/videoConferencia.txt'

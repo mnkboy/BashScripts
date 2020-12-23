@@ -10,14 +10,15 @@ arrayTest=$(listarArchivos)
 
 #Verificamos que existan los elementos de la lista
 imprimir_encabezado "CHECAMOS LS -LA"
+
 #Declaramos un array
 declare -A array_name
 i=0
 for item in $arrayTest
         do            
-            nombre=${item//"$COMODIN"/\ }                 #limpiamos
-            nombre="$DIRECTORIO_REMOTO/$nombre"            #limpiamos 
-            eval "ls -la \"$nombre\" > /dev/null 2>&1"    #ejecutamos sin echo
+            nombre=${item//"$COMODIN"/\ }                  #limpiamos
+            nombre="$DIRECTORIO_REMOTO/$nombre"            #limpiamos             
+            eval "ls -la \"$nombre\" > /dev/null 2>&1"     #ejecutamos sin echo
             resp=$(comprobar $?)
 
             #evaluamos la respuesta

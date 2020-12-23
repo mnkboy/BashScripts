@@ -16,8 +16,9 @@ continuar () {
 comprobar () {
     local output=$1
     if [ $output -ne 0 ]; then
-        echo "Ocurrio un error."
-        exit $output
+        # echo "Ocurrio un error."
+        echo $output
+        exit 
     fi
     echo "0"
 }

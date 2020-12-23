@@ -1,12 +1,6 @@
 ==========================================================
 Servidor   Conferencia
-bbb1.- No se encontro el ID 15fc25eb2319095.74550240
-bbb11.- No se encontro el ID 15fc25eb2319095.74550240
-bbb12.- No se encontro el ID 15fc25eb2319095.74550240
-bbb2.- No se encontro el ID 15fc25eb2319095.74550240
-bbb21.- No se encontro el ID 15fc25eb2319095.74550240
-bbb22.- No se encontro el ID 15fc25eb2319095.74550240
-bbb23.- No se encontro el ID 15fc25eb2319095.74550240
-bbb24.- No se encontro el ID 15fc25eb2319095.74550240
-bbb25.- ec7d52b5a9cf771f24b66087b382c8684ee4b8ae-1606573746545 Sat Nov 28 14:29:06 UTC 2020 XXXXX 6 presentation 15fc25eb2319095.74550240
+bbb1.- No se encontro el ID 15fd4116c2d4262.80824929
+bbb11.- No se encontro el ID 15fd4116c2d4262.80824929
+bbb12.- 51542fcc6a1f4361f139923f9ebee93a427a3c82-1607733612501 Sat Dec 12 00:40:12 UTC 2020 XXXXX 46 presentation 15fd4116c2d4262.80824929
 ==========================================================
