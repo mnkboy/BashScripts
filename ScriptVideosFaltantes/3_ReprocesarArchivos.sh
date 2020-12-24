@@ -1,7 +1,7 @@
 #!/bin/bash
 source "utils.sh" 
 source "vars.env"
-source "4_ComprobarReal.sh" 
+source "2_ComprobarArchivos.sh" 
 
 imprimir_encabezado "ESTAMOS EN 5_ReprocesadoReal"
 
