@@ -19,21 +19,18 @@ comprobarArchivos () {
     declare -A array_name
     i=0
     for item in $arrayTest
-            do
-		#ejecutamos sin echo                
-                c=`grep -c $item $RUTA_LISTA_VIDEOS`
-                
-		#evaluamos la respuesta
-                if [ $c != "1" ]; then                   
-                    #echo "El archivo no existe $resp \"$item\" "  
-                    array_name[$i]=$item
-                    ((i=i+1))                
-                fi            
-        done    
-
-    #Obtenemos el largo del array
-    len=${#array_name[@]}
-    
+        do
+            #ejecutamos sin echo                
+            c=`grep -c $item $RUTA_LISTA_VIDEOS`
+                    
+            #evaluamos la respuesta
+            if [ $c != "1" ]; then                   
+                #echo "El archivo no existe $resp \"$item\" "  
+                array_name[$i]=$item
+                ((i=i+1))                
+            fi            
+        done
+        
     #Imprimimos elementos inexistentes
     echo ${array_name[*]}
 }

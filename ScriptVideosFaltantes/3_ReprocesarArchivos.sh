@@ -19,7 +19,7 @@ cd /usr/local/bigbluebutton/core/scripts
 for item in $arrayTest
     do
         #ejecutamos sin echo
-	COMANDO=`sudo -n -u bigbluebutton $RUTA_REPROCESO -m $item`
+	    COMANDO=`sudo -n -u bigbluebutton $RUTA_REPROCESO -m $item`
         resp=$(comprobar $?)
         
         #evaluamos la respuesta

@@ -26,6 +26,7 @@ listarArchivos () {
         FECHA_FINAL=$fechaFinal
     fi
 
+    #Ejecutamos el comando
     LISTA=`find $DIRECTORIO $NO_RECURSIVO $TIPO_ARCHIVO  -newermt $FECHA_INICIAL ! -newermt $FECHA_FINAL`
 
     #Declaramos un array
@@ -39,6 +40,7 @@ listarArchivos () {
             array_name[$i]=$item
             ((i=i+1))
         done
+
     #Imprimimos archivos que vamos a buscar
     echo "${array_name[*]}"
 }

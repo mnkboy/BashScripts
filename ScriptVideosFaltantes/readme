@@ -1,0 +1,5 @@
+#Con parametros $1 = Fecha Inicial, $2 = Fecha Final
+./3_ReprocesarArchivos.sh 2020-12-15T06:17:00 2020-12-16T10:17:00
+
+#Sin parametros Fecha actual - 2 dias. En vars.env se pueden variar los dias
+./3_ReprocesarArchivos.sh 
